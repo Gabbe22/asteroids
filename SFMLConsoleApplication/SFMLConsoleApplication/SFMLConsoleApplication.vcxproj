@@ -149,18 +149,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="IMovable.h" />
+    <ClInclude Include="AGameObject.h" />
     <ClInclude Include="SpaceShip.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AsteroidSprite.psd" />
+    <None Include="CoinSprite.psd" />
     <None Include="ShipSprite.psd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

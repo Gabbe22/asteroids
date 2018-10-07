@@ -2,9 +2,9 @@
 #define INCLUDED_ASTEROID_H
 
 #include <SFML/Graphics.hpp>
-#include "IMovable.h"
+#include "AGameObject.h"
 
-class Asteroid : public sf::Drawable, IGameObject
+class Asteroid : public sf::Drawable, AGameObject
 {
 public:
 	Asteroid();

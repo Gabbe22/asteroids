@@ -20,8 +20,7 @@ private:
 	void handleWindowEvents();
 	void clearWindow();
 	void displayWindow();
-	void drawShip();
-	void updateShip(float deltaTime);
+	void handleLostCoin();
 	//void updateAsteroids(float deltaTime);
 	bool collision(sf::Vector2f position0, float radius0, sf::Vector2f position1, float radius1);
 	bool collision(SpaceShip* ship, Coin* coin);
@@ -31,7 +30,7 @@ private:
 	sf::Texture mCoinTexture;
 	sf::Texture mAsteroidTexture;
 	std::unique_ptr<SpaceShip> mSpaceShip;
-	//Coin *mCoin;
+	std::unique_ptr<Coin> mCoin;
 	//Asteroids mAsteroids;
 	sf::Clock mAsteroidSpawnClock;
 	int mLevel;

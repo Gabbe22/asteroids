@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include <cstdlib>
 #include <string>
 
 #include "Game.h"
 #include "SpaceShip.h"
+#include "Coin.h"
 
 namespace {
 	const std::string windowTitle = "Asteroids";
@@ -29,14 +31,14 @@ Game::Game() :
 	//mAsteroidTexture(loadTexture("AsteroidSprite.psd")),
 	//mAsteroidSpawnClock(),
 	//mShip(0),
-	//mCoin(0),
 	//mAsteroids(),
 	mLevel(START_LEVEL),
 	mGameOver(false)
 {
-	//createCoin();
+	srand(time(NULL));
 	mRenderWindow.setFramerateLimit(FRAMERATE_LIMIT);
 	mSpaceShip = std::unique_ptr<SpaceShip>(new SpaceShip(SHIP_VELOCITY, SHIP_RADIUS, getWindowSize()));
+	mCoin = std::unique_ptr<Coin>(new Coin(COIN_VELOCITY, COIN_RADIUS, getWindowSize()));
 }
 
 Game::~Game() {}
@@ -48,16 +50,16 @@ void Game::run()
 		float deltaTime = frameClock.restart().asSeconds();
 		handleWindowEvents();
 		clearWindow();
-		updateShip(deltaTime);
-		//updateCoin(deltaTime);
+		mSpaceShip->update(deltaTime);
+		mCoin->update(deltaTime);
 		//updateAsteroids(deltaTime);
 		//pruneAsteroids();
 		//createAsteroids();
 		//handleCoinPickup();
-		//handleLostCoin();
+		handleLostCoin();
 		//handleAsteroidCollisions();
-		drawShip();
-		//drawCoin();
+		mRenderWindow.draw(*(mSpaceShip.get()));
+		mRenderWindow.draw(*(mCoin.get()));
 		//drawAsteroids();
 		displayWindow();
 	}
@@ -89,16 +91,11 @@ void Game::displayWindow()
 	mRenderWindow.display();
 }
 
-void Game::drawShip()
+void Game::handleLostCoin()
 {
-	mRenderWindow.draw(*(mSpaceShip.get()));
+	if (mCoin->isLost())
+		mGameOver = true;
 }
-
-void Game::updateShip(float deltaTime)
-{
-	mSpaceShip->update(deltaTime);
-}
-
 
 bool Game::collision(sf::Vector2f position0, float radius0, sf::Vector2f position1, float radius1)
 {

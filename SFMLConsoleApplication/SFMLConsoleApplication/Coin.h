@@ -1,23 +1,26 @@
-#ifndef INCLUDED_SPACESHIP_H
-#define INCLUDED_SPACESHIP_H
+#ifndef INCLUDED_COIN_H
+#define INCLUDED_COIN_H
 
 #include <SFML/Graphics.hpp>
 #include "AGameObject.h"
 
-class SpaceShip : public sf::Drawable, AGameObject
+class Coin : public sf::Drawable, AGameObject
 {
 public:
-	SpaceShip(float velocity, float radius, sf::Vector2f windowSize);
-	virtual ~SpaceShip();
+	Coin(float velocity, float radius, sf::Vector2f windowSize);
+	virtual ~Coin();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(float deltaTime);
 
+	bool isLost() const;
+
 private:
 	void updatePosition(float deltaTime);
-	void constrainPosition();
 
-	const std::string mTextureName = "ShipSprite.psd";
+	float getRandomX() const;
+
+	const std::string mTextureName = "CoinSprite.psd";
 	sf::Sprite mSprite;
 	sf::Texture mTexture;
 	float mVelocity;
