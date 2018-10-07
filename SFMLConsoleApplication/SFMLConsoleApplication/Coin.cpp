@@ -41,8 +41,8 @@ bool Coin::isLost() const
 
 float Coin::getRandomX() const
 {
-	int width = mWindowSize.x;
-	int x = rand() % width + 1 - 2 * mRadius;
+	int width = static_cast<int>(mWindowSize.x);
+	float x = rand() % width + 1 - 2 * mRadius;
 	return x;
 }
 

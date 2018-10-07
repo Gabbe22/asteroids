@@ -35,7 +35,7 @@ Game::Game() :
 	mLevel(START_LEVEL),
 	mGameOver(false)
 {
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 	mRenderWindow.setFramerateLimit(FRAMERATE_LIMIT);
 	mSpaceShip = std::unique_ptr<SpaceShip>(new SpaceShip(SHIP_VELOCITY, SHIP_RADIUS, getWindowSize()));
 	mCoin = std::unique_ptr<Coin>(new Coin(COIN_VELOCITY, COIN_RADIUS, getWindowSize()));
