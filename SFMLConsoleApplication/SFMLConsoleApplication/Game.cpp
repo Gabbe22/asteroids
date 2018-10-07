@@ -55,7 +55,7 @@ void Game::run()
 		//updateAsteroids(deltaTime);
 		//pruneAsteroids();
 		//createAsteroids();
-		//handleCoinPickup();
+		handleCoinPickup();
 		handleLostCoin();
 		//handleAsteroidCollisions();
 		mRenderWindow.draw(*(mSpaceShip.get()));
@@ -91,6 +91,14 @@ void Game::displayWindow()
 	mRenderWindow.display();
 }
 
+void Game::handleCoinPickup()
+{
+	if (collision(mSpaceShip.get(), mCoin.get()))
+	{
+		mCoin->reset();
+	}
+}
+
 void Game::handleLostCoin()
 {
 	if (mCoin->isLost())
@@ -107,10 +115,7 @@ bool Game::collision(sf::Vector2f position0, float radius0, sf::Vector2f positio
 
 bool Game::collision(SpaceShip *ship, Coin *coin)
 {
-	/*sf::Vector2f shipPosition = ship->getPosition();
-	float shipRadius = ship->getRadius();
+	sf::Vector2f shipPosition = ship->getPosition();
 	sf::Vector2f coinPosition = coin->getPosition();
-	float coinRadius = coin->getRadius();
-	return collision(shipPosition, shipRadius, coinPosition, coinRadius);*/
-	return false;
+	return collision(shipPosition, SHIP_RADIUS, coinPosition, COIN_RADIUS);
 }

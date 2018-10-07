@@ -14,6 +14,11 @@ public:
 	void update(float deltaTime);
 
 	bool isLost() const;
+	void reset();
+	sf::Vector2f getPosition() const
+	{
+		return mSprite.getPosition();
+	}
 
 private:
 	void updatePosition(float deltaTime);

@@ -15,7 +15,7 @@ Coin::Coin(float velocity, float radius, sf::Vector2f windowSize)
 	mTexture.setSmooth(true);
 	mSprite.setTexture(mTexture);
 
-	mSprite.setPosition(sf::Vector2f(getRandomX(), -2 * mRadius));
+	reset();
 }
 
 Coin::~Coin()
@@ -37,6 +37,11 @@ bool Coin::isLost() const
 	if (mSprite.getPosition().y > mWindowSize.y)
 		return true;
 	return false;
+}
+
+void Coin::reset()
+{
+	mSprite.setPosition(sf::Vector2f(getRandomX(), -2 * mRadius));
 }
 
 float Coin::getRandomX() const

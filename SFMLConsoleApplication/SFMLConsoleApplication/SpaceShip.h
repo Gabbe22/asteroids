@@ -12,6 +12,10 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(float deltaTime);
+	sf::Vector2f getPosition() const
+	{
+		return mSprite.getPosition();
+	}
 
 private:
 	void updatePosition(float deltaTime);
