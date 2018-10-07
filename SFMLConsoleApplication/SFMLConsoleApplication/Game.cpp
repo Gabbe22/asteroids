@@ -6,11 +6,11 @@
 
 namespace {
 	const std::string windowTitle = "Asteroids";
-	const sf::VideoMode videoMode = sf::VideoMode(768, 1024);
+	const sf::VideoMode videoMode = sf::VideoMode(768, 900);
 	const sf::Color backgroundColor = sf::Color::Black;
 	const int FRAMERATE_LIMIT = 60;
 	const int START_LEVEL = 1;
-	const float SHIP_RADIUS = 20.0f;
+	const float SHIP_RADIUS = 21.0f;
 	const float SHIP_VELOCITY = 400.0f;
 	const float COIN_RADIUS = 16.0f;
 	const float COIN_VELOCITY = 80.0f;
@@ -110,9 +110,10 @@ bool Game::collision(sf::Vector2f position0, float radius0, sf::Vector2f positio
 
 bool Game::collision(SpaceShip *ship, Coin *coin)
 {
-	sf::Vector2f shipPosition = ship->getPosition();
+	/*sf::Vector2f shipPosition = ship->getPosition();
 	float shipRadius = ship->getRadius();
 	sf::Vector2f coinPosition = coin->getPosition();
 	float coinRadius = coin->getRadius();
-	return collision(shipPosition, shipRadius, coinPosition, coinRadius);
+	return collision(shipPosition, shipRadius, coinPosition, coinRadius);*/
+	return false;
 }

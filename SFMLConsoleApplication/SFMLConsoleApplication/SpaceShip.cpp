@@ -14,9 +14,9 @@ SpaceShip::SpaceShip(float velocity, float radius, sf::Vector2f windowSize)
 	}
 	mTexture.setSmooth(true);
 	mSprite.setTexture(mTexture);
-	//mSprite.SetCenter();
+	mSprite.setOrigin(radius, radius);
 
-	mSprite.setPosition(sf::Vector2f(100, 200));
+	mSprite.setPosition(sf::Vector2f(mWindowSize.x / 2, mWindowSize.y - 4 * radius));
 }
 
 SpaceShip::~SpaceShip()
@@ -57,8 +57,8 @@ void SpaceShip::constrainPosition()
 {
 	float minX = mRadius;
 	float minY = mRadius;
-	float maxX = mWindowSize.x - mRadius;
-	float maxY = mWindowSize.y - mRadius;
+	float maxX = mWindowSize.x - (2 * mRadius);
+	float maxY = mWindowSize.y - (2 * mRadius);
 	float shipX = mSprite.getPosition().x;
 	float shipY = mSprite.getPosition().y;
 	
