@@ -60,7 +60,7 @@ void Game::run()
 		//createAsteroids();
 		handleCoinPickup();
 		handleLostCoin();
-		//handleAsteroidCollisions();
+		handleAsteroidCollision();
 		mRenderWindow.draw(*(mSpaceShip.get()));
 		mRenderWindow.draw(*(mCoin.get()));
 		mRenderWindow.draw(*(mAsteroid.get()));
@@ -113,8 +113,7 @@ void Game::handleAsteroidCollision()
 {
 	if (collision(mSpaceShip.get(), mAsteroid.get()))
 	{
-		//mGameOver = true;
-		std::cout << "hej";
+		mGameOver = true;
 	}
 }
 

@@ -12,17 +12,14 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(float deltaTime);
-
 	bool isLost() const;
 	void reset();
 	sf::Vector2f getPosition() const
 	{
 		return mSprite.getPosition();
 	}
-
 private:
 	void updatePosition(float deltaTime);
-
 	float getRandomX() const;
 
 	const std::string mTextureName = "CoinSprite.psd";
