@@ -109,6 +109,15 @@ void Game::handleLostCoin()
 		mGameOver = true;
 }
 
+void Game::handleAsteroidCollision()
+{
+	if (collision(mSpaceShip.get(), mAsteroid.get()))
+	{
+		//mGameOver = true;
+		std::cout << "hej";
+	}
+}
+
 bool Game::collision(sf::Vector2f position0, float radius0, sf::Vector2f position1, float radius1)
 {
 	float deltaX = position0.x - position1.x;
@@ -122,4 +131,11 @@ bool Game::collision(SpaceShip *ship, Coin *coin)
 	sf::Vector2f shipPosition = ship->getPosition();
 	sf::Vector2f coinPosition = coin->getPosition();
 	return collision(shipPosition, SHIP_RADIUS, coinPosition, COIN_RADIUS);
+}
+
+bool Game::collision(SpaceShip *ship, Asteroid *asteroid)
+{
+	sf::Vector2f shipPosition = ship->getPosition();
+	sf::Vector2f asteroidPosition = asteroid->getPosition();
+	return collision(shipPosition, SHIP_RADIUS, asteroidPosition, ASTEROID_RADIUS);
 }

@@ -12,6 +12,7 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(float deltaTime);
+	void randomSpawn();
 	sf::Vector2f getPosition() const
 	{
 		return mSprite.getPosition();

@@ -15,7 +15,7 @@ Asteroid::Asteroid(float velocity, float radius, sf::Vector2f windowSize)
 	mTexture.setSmooth(true);
 	mSprite.setTexture(mTexture);
 	//mSprite.setOrigin(radius, radius);
-
+	randomSpawn();
 }
 
 Asteroid::~Asteroid()
@@ -30,6 +30,11 @@ void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Asteroid::update(float deltaTime)
 {
 	updatePositon(deltaTime);
+}
+
+void Asteroid::randomSpawn()
+{
+	mSprite.setPosition(sf::Vector2f(getRandomX(), -2 * mRadius));
 }
 
 float Asteroid::getRandomX() const

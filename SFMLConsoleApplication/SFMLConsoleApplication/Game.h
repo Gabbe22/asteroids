@@ -23,9 +23,11 @@ private:
 	void displayWindow();
 	void handleCoinPickup();
 	void handleLostCoin();
+	void handleAsteroidCollision();
 	//void updateAsteroids(float deltaTime);
 	bool collision(sf::Vector2f position0, float radius0, sf::Vector2f position1, float radius1);
 	bool collision(SpaceShip* ship, Coin* coin);
+	bool collision(SpaceShip* ship, Asteroid* asteroid);
 
 	sf::RenderWindow mRenderWindow;
 	sf::Texture mShipTexture;
