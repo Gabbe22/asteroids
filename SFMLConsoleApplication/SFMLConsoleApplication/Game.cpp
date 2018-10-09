@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "SpaceShip.h"
 #include "Coin.h"
+#include "Asteroid.h"
 
 namespace {
 	const std::string windowTitle = "Asteroids";
@@ -39,6 +40,7 @@ Game::Game() :
 	mRenderWindow.setFramerateLimit(FRAMERATE_LIMIT);
 	mSpaceShip = std::unique_ptr<SpaceShip>(new SpaceShip(SHIP_VELOCITY, SHIP_RADIUS, getWindowSize()));
 	mCoin = std::unique_ptr<Coin>(new Coin(COIN_VELOCITY, COIN_RADIUS, getWindowSize()));
+	mAsteroid = std::unique_ptr<Asteroid>(new Asteroid(ASTEROID_MIN_VELOCITY, ASTEROID_RADIUS, getWindowSize()));
 }
 
 Game::~Game() {}
@@ -52,6 +54,7 @@ void Game::run()
 		clearWindow();
 		mSpaceShip->update(deltaTime);
 		mCoin->update(deltaTime);
+		mAsteroid->update(deltaTime);
 		//updateAsteroids(deltaTime);
 		//pruneAsteroids();
 		//createAsteroids();
@@ -60,6 +63,7 @@ void Game::run()
 		//handleAsteroidCollisions();
 		mRenderWindow.draw(*(mSpaceShip.get()));
 		mRenderWindow.draw(*(mCoin.get()));
+		mRenderWindow.draw(*(mAsteroid.get()));
 		//drawAsteroids();
 		displayWindow();
 	}

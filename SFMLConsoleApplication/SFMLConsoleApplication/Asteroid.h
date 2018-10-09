@@ -7,23 +7,25 @@
 class Asteroid : public sf::Drawable, AGameObject
 {
 public:
-	Asteroid();
+	Asteroid(float velocity, float radius, sf::Vector2f windowSize);
 	virtual ~Asteroid();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(float deltaTime);
-
+	sf::Vector2f getPosition() const
+	{
+		return mSprite.getPosition();
+	}
 private:
 	void updatePositon(float deltaTime);
+	float getRandomX() const;
 
-	const std::string m_textureName = "AsteroidSprite.psd";
-	sf::Sprite m_sprite;
-	sf::Texture m_texture;
+	const std::string mTextureName = "AsteroidSprite.psd";
+	sf::Sprite mSprite;
+	sf::Texture mTexture;
 	float mVelocity;
 	float mRadius;
-	//sf::VertexArray m_vertices;
-
-	sf::Vector2f m_position;
+	sf::Vector2f mWindowSize;
 };
 
 #endif

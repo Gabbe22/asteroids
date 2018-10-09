@@ -2,20 +2,20 @@
 #include <sstream>
 #include <iostream>
 
-Asteroid::Asteroid()
+Asteroid::Asteroid(float velocity, float radius, sf::Vector2f windowSize)
+	: mVelocity(velocity), mRadius(radius), mWindowSize(windowSize)
 {
-	if (!m_texture.loadFromFile(m_textureName))
+	if (!mTexture.loadFromFile(mTextureName))
 	{
 		std::ostringstream ss;
-		ss << __FILE__ << "::" << __LINE__ << "::" << __func__ << ": Couldn't open " << m_textureName;
+		ss << __FILE__ << "::" << __LINE__ << "::" << __func__ << ": Couldn't open " << mTextureName;
 		std::cout << ss.str();
 		std::throw_with_nested(std::runtime_error(ss.str().c_str()));
 	}
-	m_texture.setSmooth(true);
-	m_sprite.setTexture(m_texture);
-	
-	m_position = sf::Vector2f(100, 200);
-	m_sprite.setPosition(m_position);
+	mTexture.setSmooth(true);
+	mSprite.setTexture(mTexture);
+	//mSprite.setOrigin(radius, radius);
+
 }
 
 Asteroid::~Asteroid()
@@ -24,7 +24,7 @@ Asteroid::~Asteroid()
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(m_sprite, states);
+	target.draw(mSprite, states);
 }
 
 void Asteroid::update(float deltaTime)
@@ -32,7 +32,15 @@ void Asteroid::update(float deltaTime)
 	updatePositon(deltaTime);
 }
 
+float Asteroid::getRandomX() const
+{
+	int width = static_cast<int>(mWindowSize.x);
+	float x = rand() % width + 1 - 2 * mRadius;
+	return x;
+}
+
 void Asteroid::updatePositon(float deltaTime)
 {
-	
+	sf::Vector2f direction(0.0f, 1.0f);
+	mSprite.move(deltaTime * mVelocity * direction);
 }

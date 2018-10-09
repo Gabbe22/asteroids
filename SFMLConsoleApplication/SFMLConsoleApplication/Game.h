@@ -8,6 +8,7 @@
 
 class SpaceShip;
 class Coin;
+class Asteroid;
 
 class Game
 {
@@ -32,6 +33,7 @@ private:
 	sf::Texture mAsteroidTexture;
 	std::unique_ptr<SpaceShip> mSpaceShip;
 	std::unique_ptr<Coin> mCoin;
+	std::unique_ptr<Asteroid> mAsteroid;
 	//Asteroids mAsteroids;
 	sf::Clock mAsteroidSpawnClock;
 	int mLevel;
