@@ -57,7 +57,7 @@ void Game::run()
 		mAsteroid->update(deltaTime);
 		//updateAsteroids(deltaTime);
 		//pruneAsteroids();
-		//createAsteroids();
+		createAsteroids();
 		handleCoinPickup();
 		handleLostCoin();
 		handleAsteroidCollision();
@@ -93,6 +93,20 @@ void Game::clearWindow()
 void Game::displayWindow()
 {
 	mRenderWindow.display();
+}
+
+void Game::createAsteroids()
+{
+	if (ASTEROID_SPAWN_DELTA < mAsteroidSpawnClock.getElapsedTime().asSeconds())
+	{
+		int spawnCount = int(ASTEROID_SPAWN_COUNT_BASE + mLevel * ASTEROID_SPAWN_COUNT_INCREMENT);
+		for (int i = 0; i < spawnCount; i++)
+		{
+			Asteroid *asteroidEntity = new Asteroid(ASTEROID_MIN_VELOCITY, ASTEROID_RADIUS, getWindowSize());
+			mAsteroids.push_back(asteroidEntity);
+		}
+		mAsteroidSpawnClock.restart();
+	}
 }
 
 void Game::handleCoinPickup()
