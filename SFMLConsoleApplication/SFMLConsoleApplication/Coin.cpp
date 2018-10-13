@@ -14,7 +14,6 @@ Coin::Coin(float velocity, float radius, sf::Vector2f windowSize)
 	}
 	mTexture.setSmooth(true);
 	mSprite.setTexture(mTexture);
-
 	reset();
 }
 
@@ -35,8 +34,13 @@ void Coin::update(float deltaTime)
 bool Coin::isLost() const
 {
 	if (mSprite.getPosition().y > mWindowSize.y)
+	{
 		return true;
-	return false;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void Coin::reset()

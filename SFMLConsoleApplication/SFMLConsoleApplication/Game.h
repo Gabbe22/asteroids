@@ -25,7 +25,7 @@ private:
 	void handleLostCoin();
 	void handleAsteroidCollision();
 	void createAsteroids();
-	//void updateAsteroids(float deltaTime);
+	void updateAsteroids(float deltaTime);
 	bool collision(sf::Vector2f position0, float radius0, sf::Vector2f position1, float radius1);
 	bool collision(SpaceShip* ship, Coin* coin);
 	bool collision(SpaceShip* ship, Asteroid* asteroid);
@@ -36,8 +36,10 @@ private:
 	sf::Texture mAsteroidTexture;
 	std::unique_ptr<SpaceShip> mSpaceShip;
 	std::unique_ptr<Coin> mCoin;
-	std::unique_ptr<Asteroid> mAsteroid;
-	//Asteroids mAsteroids;
+	//std::unique_ptr<Asteroid> mAsteroid;
+	Asteroid Asteroids;
+	typedef std::vector<Asteroid*> AsteroidVector;
+	AsteroidVector *mAsteroids;
 	sf::Clock mAsteroidSpawnClock;
 	int mLevel;
 	bool mGameOver;
