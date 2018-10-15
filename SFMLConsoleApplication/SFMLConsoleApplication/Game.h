@@ -37,9 +37,9 @@ private:
 	std::unique_ptr<SpaceShip> mSpaceShip;
 	std::unique_ptr<Coin> mCoin;
 	//std::unique_ptr<Asteroid> mAsteroid;
-	Asteroid Asteroids;
 	typedef std::vector<Asteroid*> AsteroidVector;
-	AsteroidVector *mAsteroids;
+	Asteroid mAsteroids;
+	//AsteroidVector *mAsteroids;
 	sf::Clock mAsteroidSpawnClock;
 	int mLevel;
 	bool mGameOver;
