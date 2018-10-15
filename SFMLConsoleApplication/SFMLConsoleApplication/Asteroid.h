@@ -9,6 +9,8 @@ class Asteroid : public sf::Drawable, AGameObject
 public:
 	Asteroid(float velocity, float radius, sf::Vector2f windowSize);
 	virtual ~Asteroid();
+	sf::FloatRect getBounds() const { return mSprite.getGlobalBounds(); }
+	bool shouldBePruned() const { return getBounds().top > static_cast<float>(mWindowSize.y); }
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(float deltaTime);

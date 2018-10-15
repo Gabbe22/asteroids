@@ -23,12 +23,13 @@ private:
 	void displayWindow();
 	void handleCoinPickup();
 	void handleLostCoin();
-	void handleAsteroidCollision();
+	void handleAsteroidCollision(const Asteroid* pAsteroid);
+	void pruneAsteroids();
 	void createAsteroids();
-	void updateAsteroids(float deltaTime);
+	void updateAsteroid(float deltaTime, Asteroid* pAsteroid) const;
 	bool collision(sf::Vector2f position0, float radius0, sf::Vector2f position1, float radius1);
 	bool collision(SpaceShip* ship, Coin* coin);
-	bool collision(SpaceShip* ship, Asteroid* asteroid);
+	bool collision(const SpaceShip* ship, const Asteroid* asteroid);
 
 	sf::RenderWindow mRenderWindow;
 	sf::Texture mShipTexture;
@@ -36,10 +37,7 @@ private:
 	sf::Texture mAsteroidTexture;
 	std::unique_ptr<SpaceShip> mSpaceShip;
 	std::unique_ptr<Coin> mCoin;
-	//std::unique_ptr<Asteroid> mAsteroid;
-	typedef std::vector<Asteroid*> AsteroidVector;
-	Asteroid mAsteroids;
-	//AsteroidVector *mAsteroids;
+	std::vector<std::unique_ptr<Asteroid>> mAsteroids;
 	sf::Clock mAsteroidSpawnClock;
 	int mLevel;
 	bool mGameOver;

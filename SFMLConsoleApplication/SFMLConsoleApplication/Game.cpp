@@ -27,11 +27,7 @@ namespace {
 
 Game::Game() :
 	mRenderWindow(videoMode, windowTitle, sf::Style::Titlebar | sf::Style::Close),
-	//mShipTexture(loadTexture("ShipSprite.psd")),
-	//mCoinTexture(loadTexture("CoinSprite.psd")),
-	//mAsteroidTexture(loadTexture("AsteroidSprite.psd")),
 	mAsteroidSpawnClock(),
-	//mShip(0),
 	mAsteroids(),
 	mLevel(START_LEVEL),
 	mGameOver(false)
@@ -40,7 +36,6 @@ Game::Game() :
 	mRenderWindow.setFramerateLimit(FRAMERATE_LIMIT);
 	mSpaceShip = std::unique_ptr<SpaceShip>(new SpaceShip(SHIP_VELOCITY, SHIP_RADIUS, getWindowSize()));
 	mCoin = std::unique_ptr<Coin>(new Coin(COIN_VELOCITY, COIN_RADIUS, getWindowSize()));
-	//mAsteroid = std::unique_ptr<Asteroid>(new Asteroid(ASTEROID_MIN_VELOCITY, ASTEROID_RADIUS, getWindowSize()));
 }
 
 Game::~Game() {}
@@ -54,20 +49,20 @@ void Game::run()
 		clearWindow();
 		mSpaceShip->update(deltaTime);
 		mCoin->update(deltaTime);
-		//mAsteroid->update(deltaTime);
-		updateAsteroids(deltaTime);
-		//pruneAsteroids();
 		createAsteroids();
 		handleCoinPickup();
 		handleLostCoin();
-		handleAsteroidCollision();
+		for (auto& asteroid : mAsteroids)
+		{
+			updateAsteroid(deltaTime, asteroid.get());
+			handleAsteroidCollision(asteroid.get());
+			mRenderWindow.draw(*asteroid);
+		}
+
+		pruneAsteroids();
+
 		mRenderWindow.draw(*(mSpaceShip.get()));
 		mRenderWindow.draw(*(mCoin.get()));
-		for (AsteroidVector::size_type i = 0; i < mAsteroids.size(); i++)
-		{
-			mRenderWindow.draw(*(mAsteroids[i].get()));
-		}
-		//drawAsteroids();
 		displayWindow();
 	}
 }
@@ -105,8 +100,7 @@ void Game::createAsteroids()
 		int spawnCount = int(ASTEROID_SPAWN_COUNT_BASE + mLevel * ASTEROID_SPAWN_COUNT_INCREMENT);
 		for (int i = 0; i < spawnCount; i++)
 		{
-			Asteroid *asteroid = new Asteroid(ASTEROID_MIN_VELOCITY, ASTEROID_RADIUS, getWindowSize());
-			mAsteroids.push_back(asteroid);
+			mAsteroids.push_back(std::unique_ptr<Asteroid>(new Asteroid(ASTEROID_MIN_VELOCITY, ASTEROID_RADIUS, getWindowSize())));
 		}
 		mAsteroidSpawnClock.restart();
 	}
@@ -117,6 +111,7 @@ void Game::handleCoinPickup()
 	if (collision(mSpaceShip.get(), mCoin.get()))
 	{
 		mCoin->reset();
+		mLevel++;
 	}
 }
 
@@ -126,23 +121,30 @@ void Game::handleLostCoin()
 		mGameOver = true;
 }
 
-void Game::updateAsteroids(float deltaTime)
+void Game::updateAsteroid(float deltaTime, Asteroid* pAsteroid) const
 {
-	for (AsteroidVector::size_type i = 0; i < mAsteroids->size(); i++)
+	pAsteroid->update(deltaTime);
+}
+
+void Game::handleAsteroidCollision(const Asteroid* pAsteroid)
+{
+	if (collision(mSpaceShip.get(), pAsteroid))
 	{
-		mAsteroids[i].update(deltaTime);
+		mGameOver = true;
 	}
 }
 
-void Game::handleAsteroidCollision()
+namespace
 {
-	for (AsteroidVector::size_type i = 0; i < mAsteroids->size(); i++)
+	bool shouldBePruned(const std::unique_ptr<Asteroid>& asteroid)
 	{
-		if (collision(mSpaceShip.get(), mAsteroids[i].get()))
-		{
-			mGameOver = true;
-		}
+		return asteroid->shouldBePruned();
 	}
+}
+
+void Game::pruneAsteroids()
+{
+	mAsteroids.erase(std::remove_if(mAsteroids.begin(), mAsteroids.end(), shouldBePruned), mAsteroids.end());
 }
 
 bool Game::collision(sf::Vector2f position0, float radius0, sf::Vector2f position1, float radius1)
@@ -160,7 +162,7 @@ bool Game::collision(SpaceShip *ship, Coin *coin)
 	return collision(shipPosition, SHIP_RADIUS, coinPosition, COIN_RADIUS);
 }
 
-bool Game::collision(SpaceShip *ship, Asteroid *asteroid)
+bool Game::collision(const SpaceShip *ship, const Asteroid *asteroid)
 {
 	sf::Vector2f shipPosition = ship->getPosition();
 	sf::Vector2f asteroidPosition = asteroid->getPosition();
