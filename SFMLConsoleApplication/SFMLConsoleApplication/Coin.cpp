@@ -45,14 +45,19 @@ bool Coin::isLost() const
 
 void Coin::reset()
 {
-	mSprite.setPosition(sf::Vector2f(getRandomX(), -2 * mRadius));
+	float maxX = mWindowSize.x - getBounds().width;
+	float x = getRandomX();
+
+	if (x > maxX)
+		x = maxX;
+
+	mSprite.setPosition(sf::Vector2f(x, -2 * mRadius));
 }
 
 float Coin::getRandomX() const
 {
 	int width = static_cast<int>(mWindowSize.x);
-	float x = rand() % width + 1 - 2 * mRadius;
-	return x;
+	return static_cast<float>(rand() % width + 1);
 }
 
 void Coin::updatePosition(float deltaTime)

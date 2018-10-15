@@ -10,6 +10,7 @@ public:
 	Coin(float velocity, float radius, sf::Vector2f windowSize);
 	virtual ~Coin();
 
+	sf::FloatRect getBounds() const { return mSprite.getGlobalBounds(); }
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void update(float deltaTime);
 	bool isLost() const;
